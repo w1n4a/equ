@@ -4,7 +4,7 @@ version = "0.1.0"
 edition = "2021"
 description = "A simple data package for Rust by w1n4a"
 license = "MIT"
-repository = "https://github.com/w1n4a/equ/tree/main"
+repository = "https://github.com/w1n4a/equ/"
 
 [lib]
 path = "src/core.rs"
