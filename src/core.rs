@@ -4,7 +4,7 @@ use std::collections::HashMap;
 use std::fs;
 use std::io;
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct File {
     pub path: String,
 }
