@@ -11,7 +11,7 @@ It has trait Core and enum Types.
     use equ::Core;
 
     fn main() {
-        let files = core::new("safe.dat"); //new struct
+        let files = equ::new("safe.dat"); //new struct
     }
 ```
 
@@ -21,7 +21,7 @@ It has trait Core and enum Types.
     use equ::Core;
 
     fn main() {
-        let files = core::new("safe.dat"); //new struct
+        let files = equ::new("safe.dat"); //new struct
         let res = files.load().unwrap(); //HashMap
     }
 ```
@@ -33,7 +33,7 @@ It has trait Core and enum Types.
     use std::collections::HashMap;
 
     fn main() {
-        let files = core::new("safe.dat"); //new struct
+        let files = equ::new("safe.dat"); //new struct
 
         let mut hm: HashMap<String, String> = HashMap::new();
         hm.insert(String::from("Key"), Types::String(String::from("Value")));
@@ -50,7 +50,7 @@ It has trait Core and enum Types.
     use std::collections::HashMap;
 
     fn main() {
-        let files = core::new("safe.dat"); //new struct
+        let files = equ::new("safe.dat"); //new struct
 
         let mut hm: HashMap<String, Types> = HashMap::new();
         hm.insert(String::from("Key"), Types::String(String::from("Value")));
