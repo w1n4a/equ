@@ -1,6 +1,6 @@
 [package]
 name = "equ"
-version = "0.1.2"
+version = "1.0.0"
 edition = "2021"
 description = "A simple data package for Rust by w1n4a"
 license = "MIT"

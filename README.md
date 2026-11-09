@@ -1,7 +1,7 @@
 ## EQU (equ)
 
 Equ is simple data package for Rust by w1n4a.
-It has trait Core.
+It has trait Core and enum Types.
 
 ## Core:
 
@@ -36,7 +36,8 @@ It has trait Core.
         let files = core::new("safe.dat"); //new struct
 
         let mut hm: HashMap<String, String> = HashMap::new();
-        hm.insert(String::from("Key"), String::from("Value"))
+        hm.insert(String::from("Key"), Types::String(String::from("Value")));
+        hm.insert(String::from("Key"), Types::Vector(vec![String::from("Value"),String::from("Value2")]));
         
         files.write(&hm).unwrap(); //write
     }
@@ -51,8 +52,9 @@ It has trait Core.
     fn main() {
         let files = core::new("safe.dat"); //new struct
 
-        let mut hm: HashMap<String, String> = HashMap::new();
-        hm.insert(String::from("Key"), String::from("Value"))
+        let mut hm: HashMap<String, Types> = HashMap::new();
+        hm.insert(String::from("Key"), Types::String(String::from("Value")));
+        hm.insert(String::from("Key"), Types::Vector(vec![String::from("Value"),String::from("Value2")]));
         
         files.add(&hm).unwrap(); //add
     }
