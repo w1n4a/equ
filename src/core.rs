@@ -73,7 +73,7 @@ impl Core for File {
                     let mut str: String = String::from(format!("{}=[", i.0));
                     for i in 0..v.len() {
                         if i == v.len() - 1 {
-                            str.push_str(&format!("{}]", &v[i]).to_string());
+                            str.push_str(&format!("{}]\n", &v[i]).to_string());
                         } else {
                             str.push_str(&format!("{}, ", &v[i]).to_string());
                         }
