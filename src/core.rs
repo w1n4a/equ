@@ -20,7 +20,7 @@ pub trait Core {
     fn load(&self) -> Option<HashMap<String, Types>>;
     fn write(&self, content: &HashMap<String, Types>) -> Result<(), io::Error>;
     fn add(&self, content: &HashMap<String, Types>) -> Result<(), io::Error>;
-    fn del(&self, content: &HashMap<String, Types>) -> Result<(), io::Error>;
+    fn del(&self, content: &String) -> Result<(), io::Error>;
 }
 
 pub fn new(path: &str) -> File {
@@ -102,16 +102,11 @@ impl Core for File {
         self.write(&data)
     }
 
-    fn del(&self, content: &HashMap<String, Types>) -> Result<(), io::Error> {
+    fn del(&self, content: &String) -> Result<(), io::Error> {
         let mut data: HashMap<String, Types> = self.load().unwrap();
 
-        for i in content {
-            let k = i.0.clone();
-            if data.contains_key(&k) {
-                data.remove(&k);
-            } else {
-                continue;
-            }
+        if data.contains_key(content) {
+            data.remove(content);
         }
 
         self.write(&data)
