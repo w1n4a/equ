@@ -10,7 +10,7 @@ pub struct File {
     pub path: String,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub enum Types {
     String(String),
     Vector(Vec<String>),
@@ -20,6 +20,7 @@ pub trait Core {
     fn load(&self) -> Option<HashMap<String, Types>>;
     fn write(&self, content: &HashMap<String, Types>) -> Result<(), io::Error>;
     fn add(&self, content: &HashMap<String, Types>) -> Result<(), io::Error>;
+    fn del(&self, content: &HashMap<String, Types>) -> Result<(), io::Error>;
 }
 
 pub fn new(path: &str) -> File {
@@ -90,46 +91,29 @@ impl Core for File {
     }
 
     fn add(&self, content: &HashMap<String, Types>) -> Result<(), io::Error> {
-        let mut res: String = String::new();
-        let data: HashMap<String, Types> = self.load().unwrap();
-
-        for i in &data {
-            match i.1 {
-                Types::String(v) => res.push_str(&format!("{}={}\n", i.0, v).to_string()),
-                Types::Vector(v) => {
-                    let mut str: String = String::from(format!("{}=[", i.0));
-                    for i in 0..v.len() {
-                        if i == v.len() - 1 {
-                            str.push_str(&format!("{}]", &v[i]).to_string());
-                        } else {
-                            str.push_str(&format!("{}, ", &v[i]).to_string());
-                        }
-                    }
-                    res.push_str(&str);
-                }
-            }
-        }
+        let mut data: HashMap<String, Types> = self.load().unwrap();
 
         for i in content {
-            match i.1 {
-                Types::String(v) => res.push_str(&format!("{}={}\n", i.0, v).to_string()),
-                Types::Vector(v) => {
-                    let mut str: String = String::from(format!("{}=[", i.0));
-                    for i in 0..v.len() {
-                        if i == v.len() - 1 {
-                            str.push_str(&format!("{}]", &v[i]).to_string());
-                        } else {
-                            str.push_str(&format!("{}, ", &v[i]).to_string());
-                        }
-                    }
-                    res.push_str(&str);
-                }
+            let k = i.0.clone();
+            let v = i.1.clone();
+            data.insert(k, v);
+        }
+
+        self.write(&data)
+    }
+
+    fn del(&self, content: &HashMap<String, Types>) -> Result<(), io::Error> {
+        let mut data: HashMap<String, Types> = self.load().unwrap();
+
+        for i in content {
+            let k = i.0.clone();
+            if data.contains_key(&k) {
+                data.remove(&k);
+            } else {
+                continue;
             }
         }
 
-        match fs::write(&self.path, res) {
-            Ok(()) => Ok(()),
-            Err(v) => Err(v),
-        }
+        self.write(&data)
     }
 }
